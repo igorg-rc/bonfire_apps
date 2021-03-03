@@ -32,9 +32,10 @@ app.use('/api/private', require('./routes/private'));
 // Error Handler (Should be last piece of middleware)
 app.use(errorHandler);
 
-app.use('/', function(req, res) {
-  res.send('Hello heroku!');
-})
+// app.use(express.static(path.join(__dirname, './client-admin', 'build')));
+// app.use('/', function(req, res) {
+//   res.sendFile(path.join(__dirname, './client-admin', 'build', 'index.html'));
+// })
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
