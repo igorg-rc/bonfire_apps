@@ -1,0 +1,13 @@
+.Header_animated,
+.Img_animated {
+  animation: fadeIn ease 5s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

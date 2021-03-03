@@ -1,0 +1,404 @@
+/* .App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+} */
+
+.App {
+  text-align: center;
+  font-family: "Roboto";
+}
+
+p {
+  text-align: justify;
+}
+
+.lead {
+  font-weight: 100;
+  font-size: 20px;
+}
+
+/* Blocks height properties */
+.block {
+  padding: 1vh 0 !important;
+  /* height: 100% !important; */
+}
+
+#technologies,
+#industries,
+#contactUs {
+  height: 100vh !important;
+  padding: 20vh 0;
+}
+
+#technologies {
+  padding-top: 25vh !important;
+}
+
+#technologies-content {
+  padding-top: 5vh !important;
+}
+
+#contact-form {
+  /* height: 40vh !important; */
+}
+
+#map {
+  padding-top: 30vh;
+}
+
+h1.block-title {
+  /* padding: 1vh 0; */
+  font-size: 5rem;
+}
+
+h2.block-subtitle {
+  padding: 0.5vh 0;
+  font-size: 3.5rem;
+}
+
+h5.tech-title {
+  font-size: 1.4rem;
+}
+
+nav.main-nav {
+  background: rgba(0, 0, 0, 0);
+  border-bottom: none;
+  box-shadow: none;
+}
+
+footer ul li {
+  text-align: left;
+}
+
+ul#mobile-demo li a,
+footer ul li a {
+  color: #4db6ac;
+  position: relative;
+}
+ul#mobile-demo li a:hover,
+footer ul li a:hover {
+  color: #e0f2f1;
+  transition: all 0.3s ease-in-out;
+}
+
+ul#mobile-demo li a:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  visibility: hidden;
+  transform: scaleX(0);
+  transition: all 0.3s ease-in-out;
+}
+
+ul#mobile-demo li a:hover:before {
+  visibility: visible;
+  transform: scaleX(0.3);
+}
+
+iframe {
+  padding-top: 2vh;
+  height: 60vh;
+  width: 100% !important;
+  /* background-color: #c6c7af; */
+}
+
+.input-field input[type="text"],
+.input-field textarea {
+  border-bottom: 1px solid #b2dfdb !important;
+}
+
+.input-field input[type="text"]:focus + label {
+  color: #e0f2f1 !important;
+}
+
+.input-field input:focus,
+.input-field textarea:focus {
+  border-bottom: 1px solid #e0f2f1 !important;
+  box-shadow: 0 1px 1px 0 #e0f2f1 !important;
+}
+
+.input-field input[type="text"].invalid {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+
+.input-field .prefix.active {
+  color: #000;
+}
+form a.btn {
+  color: #b2dfdb;
+  border: 2px solid #b2dfdb;
+  box-shadow: none !important;
+  transition: 0.7s;
+}
+
+form a.btn:hover {
+  background-color: #e0f2f1 !important;
+  color: #009688 !important;
+}
+
+/* Technologies */
+.tabs .tab a {
+  color: #009688 !important;
+  font-weight: 900;
+  font-size: 1.5rem !important;
+} /*Black color to the text*/
+
+.tabs .tab a:hover {
+  background-color: transparent !important;
+  color: #80cbc4 !important;
+} /*Text color on hover*/
+
+.tabs .tab a.active {
+  background-color: transparent !important;
+  color: #fff !important;
+} /*Background and text color when a tab is active*/
+
+.tabs .indicator {
+  background-color: #009688 !important;
+} /*Color of underline*/
+
+.tech-list {
+  padding: 20px 0 !important;
+}
+
+.tech-block {
+  padding: 20px 30px !important;
+}
+
+img.tech-img {
+  width: 70px;
+  height: 70px;
+  padding: 2%;
+}
+
+/* ============================== Grid overriding =================================== */
+/* ===== Col classes ===== */
+
+.l4 {
+  padding: 0.25rem !important;
+}
+
+/* Contact us */
+.contact-section {
+  padding: 50px 0 100px 0;
+}
+
+footer {
+  height: 100%;
+  padding: 1vh 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@media (max-width: 750px) {
+  h1.block-title {
+    padding: 0.5vh 0 !important;
+    font-size: 3.5rem;
+  }
+
+  h2.block-subtitle {
+    padding: 0.5vh 0 !important;
+    font-size: 2.5rem;
+  }
+
+  .sidenav {
+    width: 70% !important;
+  }
+
+  /* .block {
+    height: 100% !important;
+    padding: 30vh;
+  }
+
+  #contactUs {
+    height: 40vh !important;
+  } */
+
+  #technologies,
+  #industries,
+  #contactUs {
+    height: 100% !important;
+    padding: 10vh 0;
+  }
+
+  #technologies,
+  #industries,
+  #contactUs {
+    padding-top: 10vh !important;
+  }
+
+  #map {
+    padding: 1.5vh 0;
+  }
+
+  .tabs .tab a {
+    font-size: 0.8rem !important;
+  }
+
+  h5.tech-title {
+    font-size: 0.7rem !important;
+  }
+
+  img.tech-img {
+    width: 35px !important;
+    height: 35px;
+  }
+
+  .tech-list {
+    padding: 20px 0;
+  }
+
+  /* form a.btn {
+    width: 100%;
+  } */
+
+  footer {
+    height: 100%;
+    padding: 2vh 0;
+  }
+
+  #footer-content {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+  }
+
+  .wrapper_links h5,
+  .wrapper_links ul li,
+  #copyright h5,
+  #copyright p {
+    text-align: center;
+  }
+
+  .wrapper_links li img {
+    display: none;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 750px) {
+}
+
+@media (min-width: 700px) and (max-width: 980px) {
+  h1.block-title {
+    font-size: 4rem;
+  }
+
+  h2.block-subtitle {
+    padding: 0.5vh 0 !important;
+    font-size: 3rem;
+  }
+
+  h5.tech-title {
+    font-size: 1.3rem;
+  }
+
+  h1.block-title {
+    padding: 0.5vh 0 !important;
+    font-size: 3.5rem;
+  }
+
+  h2.block-subtitle {
+    padding: 0.5vh 0 !important;
+    font-size: 2.5rem;
+  }
+
+  .sidenav {
+    width: 70% !important;
+  }
+
+  #technologies,
+  #industries,
+  #contactUs {
+    height: 100% !important;
+  }
+
+  #map {
+    padding-top: 5vh;
+  }
+
+  img.tech-img {
+    width: 38px;
+    height: 38px;
+  }
+  .tabs .tab a {
+    font-size: 1.5rem !important;
+  }
+
+  /* footer p {
+    line-height: 0.7;
+  } */
+}
+
+@media (min-width: 980px) and (max-width: 1200px) {
+  .block {
+    padding: 1.5vh 0 !important;
+  }
+
+  h1.block-title {
+    font-size: 2.5rem;
+  }
+
+  h2.block-subtitle {
+    font-size: 2rem;
+  }
+
+  h5.tech-title {
+    font-size: 0.9rem !important;
+  }
+  img.tech-img {
+    width: 35px;
+    height: 35px;
+  }
+
+  #industries {
+    height: 100% !important;
+  }
+  .tabs .tab a {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1400px) {
+  .block {
+    padding: 2vh 0 !important;
+  }
+
+  h1.block-title {
+    font-size: 3rem !important;
+  }
+
+  h5.tech-title {
+    font-size: 1.2rem !important;
+  }
+  img.tech-img {
+    width: 40px;
+    height: 40px;
+  }
+  .tabs .tab a {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: 980px) and (max-width: 993px) {
+    #industries {
+      padding-top: 20vh;
+    }
+  }
+}
