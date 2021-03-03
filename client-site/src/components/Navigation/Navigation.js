@@ -4,7 +4,7 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 
 import classes from './Navigation.module.css'
 
-export default class Navigation extends Component() {
+export default class Navigation extends Component {
   componentDidMount() {
     
   document.addEventListener('DOMContentLoaded', function() {

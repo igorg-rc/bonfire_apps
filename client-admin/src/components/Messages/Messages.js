@@ -8,7 +8,6 @@ import Layout from '../Layout/Layout'
 
 import './Messages.css'
 
-
 const customStyles = {
   title: {
     style: {

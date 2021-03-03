@@ -8,7 +8,7 @@ export const technologies = {
     {"title":"jQuery","imgUrl":"img/layout/icons/teal/tech/frontend/jquery.png"},
     {"title":"Material UI","imgUrl":"img/layout/icons/teal/tech/frontend/materialui.png"},
     {"title":"Extension","imgUrl":"img/layout/icons/teal/tech/frontend/firefox.png"}
-  ],
+  ], 
   "backend": [
     {"title":"Python","imgUrl":"img/layout/icons/teal/tech/backend/python.png"},
     {"title":"Node js","imgUrl":"img/layout/icons/teal/tech/backend/node-js.png"},
