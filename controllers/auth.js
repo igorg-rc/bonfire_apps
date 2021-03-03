@@ -32,7 +32,7 @@ exports.login = async (req, res, next) => {
     const isMatch = await user.matchPassword(password);
     
     if (!isMatch) {
-      return next(new ErrorResponse("Invalid credentials", 401));
+      return next(new ErrorResponse("Invalid username or password", 401));
     }
     sendToken(user, 200, res);
 
@@ -58,7 +58,7 @@ exports.forgot_password = async (req, res, next) => {
     await user.save();
 
     // Create reset url to email to provided email
-    const resetUrl = `http://localhost:3000/passwordreset/${resetToken}`;
+    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`;
 
     // HTML Message
     const message = `

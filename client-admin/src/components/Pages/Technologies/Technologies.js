@@ -1,12 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { technologies } from './TechnologiesData'
 import { Modal, Button } from 'react-materialize'
-
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 import Layout from '../../Layout/Layout'
 
 import './Technologies.css'
 
 export default function Technologies() {
+	const [error, setError] = useState("");
+  const [privateData, setPrivateData] = useState("");
+	
+
+  useEffect(() => {
+    const fetchPrivateDate = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+
+      try {
+        const { data } = await axios.get("/api/private", config);
+        setPrivateData(data.data);
+      } catch (error) {
+        localStorage.removeItem("authToken");
+        setError("You are not authorized!");
+      }
+    };
+
+    fetchPrivateDate();
+  }, []);
+
 
 	const frontendList = technologies.frontend.map(technology => {
 		return	<tr>
@@ -362,7 +388,13 @@ export default function Technologies() {
 						</tr>
 	});
 
-	return (
+	return ( error ? (
+    <div className="error-screen">
+			<span className="error-message">{error}</span>
+			<span>To perform this action you have to <Link to="login">login</Link></span>
+		</div>
+		
+  ) : (
 					<>
 						<Layout />
 						<div id="technologies" style={{ paddingTop: '75px'}}>
@@ -1107,4 +1139,5 @@ export default function Technologies() {
 						</div>
 					</>
 	)
+	);
 }

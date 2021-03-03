@@ -1,10 +1,44 @@
-import React from 'react'
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-import Layout from '../../Layout/Layout'
+import Layout from '../../Layout/Layout';
+import { Link } from "react-router-dom";
+
 
 export default function Home() {
-	return (
-		<>
+	const [error, setError] = useState("");
+  const [privateData, setPrivateData] = useState("");
+
+  useEffect(() => {
+    const fetchPrivateDate = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+
+      try {
+        const { data } = await axios.get("/api/private", config);
+        setPrivateData(data.data);
+      } catch (error) {
+        localStorage.removeItem("authToken");
+        setError("You are not authorized!");
+      }
+    };
+
+    fetchPrivateDate();
+  }, []);
+
+
+  return error ? (
+    <div className="error-screen">
+			<span className="error-message">{error}</span>
+			<span>To perform this action you have to <Link to="login">login</Link></span>
+		</div>
+		
+  ) : (
+    <div>
 			<Layout />
 			<div>
 				<h1>Home component!</h1>
@@ -14,6 +48,8 @@ export default function Home() {
 					</div>
 				</div>
 			</div>
-		</>
-	)
-}
+		</div>
+  );
+};
+
+

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Pagination, Icon } from 'react-materialize'
 import DataTable from 'react-data-table-component'
-// import { TablePagination } from 'react-pagination-table'
 import  {columns, data} from '../Pages/Table/MessagesData'
-// import { data, Header } from './MessagesData'
+import { Link } from 'react-router-dom'
+import axios from 'axios'
 import SortIcon from "@material-ui/icons/ArrowDownward"
 import Layout from '../Layout/Layout'
 
@@ -50,8 +49,38 @@ const customStyles = {
 
 export default function Messages() {
 	const [perPage, setPerPage] = useState(15);
+	const [error, setError] = useState("");
+  const [privateData, setPrivateData] = useState("");
+
+  useEffect(() => {
+    const fetchPrivateDate = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+
+      try {
+        const { data } = await axios.get("/api/private", config);
+        setPrivateData(data.data);
+      } catch (error) {
+        localStorage.removeItem("authToken");
+        setError("You are not authorized!");
+      }
+    };
+
+    fetchPrivateDate();
+  }, []);
 
 	return (
+		error ? (
+			<div className="error-screen">
+				<span className="error-message">{error}</span>
+				<span>To perform this action you have to <Link to="login">login</Link></span>
+			</div>
+			
+		) : (
 		<>
 		<Layout />
 		<div id="messages" style={{ paddingTop: '75px', paddingLeft: '' }}>
@@ -137,4 +166,5 @@ export default function Messages() {
 		</>
 
 			)
+	);
 }

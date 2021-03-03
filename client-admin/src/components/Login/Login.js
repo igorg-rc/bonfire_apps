@@ -46,7 +46,7 @@ export default function Login ({ history }) {
       <div id="login" style={{ paddingTop: '75px', paddingLeft: '' }}>
         <div className="" style={{ height: '100vh' }}>
 
-          <div class="row">
+          <div className="row">
             <div className="col s6 offset-s3 form-wrapper indigo darken-1 white-text">
               <div className="row">
                 <div className="col s12 logo-handler">
@@ -57,17 +57,18 @@ export default function Login ({ history }) {
               </div>
 
               <form onSubmit={loginHandler} >
+              {error && <span className="error-message">{error}</span>}
                 <div className="row">
-                  <div class="input-field col s10 offset-s1">
-                    <i class="material-icons prefix">account_circle</i>
+                  <div className="input-field col s10 offset-s1">
+                    <i className="material-icons prefix">account_circle</i>
                     <input 
-                    id="username" 
-                    type="text" 
-                    name="username"
-                    required 
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                    tabIndex={1}
+                      id="username" 
+                      type="text" 
+                      name="username"
+                      required 
+                      onChange={(e) => setUsername(e.target.value)}
+                      value={username}
+                      tabIndex={1}
                     />
                     <label for="username">Login</label>
                   </div>
@@ -75,8 +76,8 @@ export default function Login ({ history }) {
 
 
                 <div className="row">
-                  <div class="input-field col s10 offset-s1">
-                    <i class="material-icons prefix">vpn_key</i>
+                  <div className="input-field col s10 offset-s1">
+                    <i className="material-icons prefix">vpn_key</i>
                     <input 
                       id="password" 
                       type="password" 
@@ -87,7 +88,7 @@ export default function Login ({ history }) {
                       value={password}
                       tabIndex={2}
                       />
-                    <label for="password">Password</label>
+                    <label htmlFor="password">Password</label>
                   </div>
                 </div>
 
@@ -101,8 +102,8 @@ export default function Login ({ history }) {
                 </div>
 
                 <div className="row">
-                  <div class="input-field col s10 offset-s1">
-                    <a type="submit" class="waves-effect waves-light btn"><i class="material-icons left">login</i>Sign in</a>
+                  <div className="input-field col s10 offset-s1">
+                    <button type="submit" className="waves-effect waves-light btn"><i className="material-icons left">login</i>Sign in</button>
                   </div>
                 </div>
 

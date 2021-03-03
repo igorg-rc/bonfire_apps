@@ -14,7 +14,6 @@ import Error from './components/Error';
 function App() {
   return (
     <div className="App">
-      {/* <Layout /> */}
       <div className="container">
         <main>
           <Switch>
@@ -23,7 +22,7 @@ function App() {
             <Route path="/industries" component={Industries} />
             <Route path="/messages" component={Messages} />
             <Route path="/table" component={Table} />
-            <Route path="/logout" component={Login} />
+            <Route path="/login" component={Login} />
             <Route component={Error} />
           </Switch>
         </main>

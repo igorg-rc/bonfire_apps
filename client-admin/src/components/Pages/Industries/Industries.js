@@ -1,11 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import './Industries.css'
 import { industries } from './IndustriesData'
 import {Modal, Button, Icon, TextInput, Textarea, Row, Col} from 'react-materialize'
+import axios from 'axios'
+import { Link } from 'react-router-dom'
 import Layout from '../../Layout/Layout';
 
 export default function Industries() {
+	const [error, setError] = useState("");
+  const [privateData, setPrivateData] = useState("");
+
+  useEffect(() => {
+    const fetchPrivateDate = async () => {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      };
+
+      try {
+        const { data } = await axios.get("/api/private", config);
+        setPrivateData(data.data);
+      } catch (error) {
+        localStorage.removeItem("authToken");
+        setError("You are not authorized!");
+      }
+    };
+
+    fetchPrivateDate();
+  }, []);
+
 
 	const industriesList = industries.map(industry => {
 		return 	<div className="col s12 m6 l4">
@@ -93,7 +119,13 @@ export default function Industries() {
 						</div>
 	});
 
-	return (
+	return ( error ? (
+    <div className="error-screen">
+			<span className="error-message">{error}</span>
+			<span>To perform this action you have to <Link to="login">login</Link></span>
+		</div>
+		
+  ) : (
 			<>
 			<Layout />
 			<div  id="technologies" style={{ paddingTop: '75px', paddingLeft: '0' }} className="">
@@ -172,5 +204,6 @@ export default function Industries() {
 				</div>
 			</div>
 			</>
-	)
+		)
+	);
 }
