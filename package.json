@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node app.js",
-    "server": "nodemon app.js"
+    "server": "nodemon app.js",
+    "heroku-postbuild": "cd client-admin && npm run build && npm start"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
