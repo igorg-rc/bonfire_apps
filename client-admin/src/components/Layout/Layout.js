@@ -1,13 +1,24 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import M from 'materialize-css/dist/js/materialize.min.js'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
+import axios from 'axios'
 
 import './Layout.css'
 import logo from '../../img/layout/index1_square_white_96.png'
 
 export default function Layout() {
-  
-
+  const history = useHistory();
+  // useEffect(() => {
+  //   const loggedInUser = localStorage.getItem("authToken");
+  //   if (loggedInUser) {
+  //     const foundUser = JSON.parse(loggedInUser);
+  //     setUser(foundUser);
+  //   }
+  // }, []);
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    history.push('/login');
+  };
 
 
     return (
@@ -23,7 +34,7 @@ export default function Layout() {
               <li><NavLink to="/industries" activeClassName="active" className="waves-effect white-text">Industries<i className="material-icons white-text">cases</i></NavLink></li>
               <li><NavLink to="/messages" activeClassName="active" className="waves-effect white-text">Messages<i className="material-icons white-text">email</i></NavLink></li>
               <div style={{ backgroundColor: '#5E69AF', height: '0.17vh', margin: '1vh 1vw' }}></div>
-              <li><NavLink onClick={() => this.logoutHandler()} to="/login" activeClassName="active" className="waves-effect white-text">Logout<i className="material-icons white-text">logout</i></NavLink></li>
+              <li><a onClick={() => logout()} activeClassName="active" className="waves-effect white-text">Logout<i className="material-icons white-text">logout</i></a></li>
             </ul>
         </div>
       </>
