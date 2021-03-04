@@ -26,7 +26,7 @@ exports.login = async (req, res, next) => {
   try {
     const user = await User.findOne({ username }).select("+password");
     if (!user) {
-      return next(new ErrorResponse("Invalid credentials", 401));
+      return next(new ErrorResponse("Invalid username or password", 401));
     }
     
     const isMatch = await user.matchPassword(password);
