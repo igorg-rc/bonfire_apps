@@ -31,13 +31,7 @@ export default function Home() {
   }, []);
 
 
-  return error ? (
-    <div className="error-screen">
-			<span className="error-message">{error}</span>
-			<span>To perform this action you have to <Link to="login">login</Link></span>
-		</div>
-		
-  ) : (
+  return (
     <div>
 			<Layout />
 			<div>
@@ -49,7 +43,7 @@ export default function Home() {
 				</div>
 			</div>
 		</div>
-  );
+  )
 };
 
 

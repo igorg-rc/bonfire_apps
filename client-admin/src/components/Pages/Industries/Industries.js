@@ -119,13 +119,7 @@ export default function Industries() {
 						</div>
 	});
 
-	return ( error ? (
-    <div className="error-screen">
-			<span className="error-message">{error}</span>
-			<span>To perform this action you have to <Link to="login">login</Link></span>
-		</div>
-		
-  ) : (
+	return (
 			<>
 			<Layout />
 			<div  id="technologies" style={{ paddingTop: '75px', paddingLeft: '0' }} className="">
@@ -205,5 +199,4 @@ export default function Industries() {
 			</div>
 			</>
 		)
-	);
 }

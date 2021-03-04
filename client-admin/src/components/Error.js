@@ -50,17 +50,10 @@ export default function Error() {
 
 
 	return (
-    error ? (
-      <div className="error-screen">
-        <span className="error-message">{error}</span>
-        <span>To perform this action you have to <Link to="login">login</Link></span>
-      </div>
-      
-    ) : (
+   
 		<div>
       <Layout />
 			<h1>Ooops! Requsted page does not exist.</h1>
 		</div>
 	  )
-  );
 }

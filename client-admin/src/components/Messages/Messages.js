@@ -73,13 +73,6 @@ export default function Messages() {
   }, []);
 
 	return (
-		error ? (
-			<div className="error-screen">
-				<span className="error-message">{error}</span>
-				<span>To perform this action you have to <Link to="login">login</Link></span>
-			</div>
-			
-		) : (
 		<>
 		<Layout />
 		<div id="messages" style={{ paddingTop: '75px', paddingLeft: '' }}>
@@ -164,6 +157,5 @@ export default function Messages() {
 
 		</>
 
-			)
-	);
+	)
 }
