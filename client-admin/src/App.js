@@ -23,10 +23,6 @@ const ProtectedRoute = ({ component: Comp, loggedIn, path, ...rest }) => {
 }
 
 function App() {
-  const loggedIn = () => {
-    return localStorage.getItem("authToken");
-  }
-
 
   return (
     <div className="App">

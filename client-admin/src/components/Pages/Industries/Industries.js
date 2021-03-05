@@ -1,36 +1,40 @@
 import React, { useState, useEffect } from 'react'
-
+import { useDispatch } from 'react-redux'
 import './Industries.css'
 import { industries } from './IndustriesData'
 import {Modal, Button, Icon, TextInput, Textarea, Row, Col} from 'react-materialize'
+import { useSelector } from 'react-redux'
+import FileBase from 'react-file-base64'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+
+import { getIndustries, addIndustry } from '../../../actions/industries'
+
 import Layout from '../../Layout/Layout';
 
+
+
 export default function Industries() {
-	const [error, setError] = useState("");
-  const [privateData, setPrivateData] = useState("");
+	const history = useHistory();
+
+	const [ industryData, setIndustryData ] = useState({title: '', imgUrl: ''});
+
+	const industries = useSelector((state) => state.industries);
+
+	console.log(industries);
+
+	const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchPrivateDate = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      };
+		dispatch(getIndustries());
+	}, [dispatch]);
 
-      try {
-        const { data } = await axios.get("/api/private", config);
-        setPrivateData(data.data);
-      } catch (error) {
-        localStorage.removeItem("authToken");
-        setError("You are not authorized!");
-      }
-    };
+	const addIndustryHandler = (e) => {
+		e.preventDefault();
 
-    fetchPrivateDate();
-  }, []);
+		dispatch(addIndustry(industryData));
+	}
 
 
 	const industriesList = industries.map(industry => {
@@ -83,14 +87,14 @@ export default function Industries() {
 														<div className="row">
 															<div className="col s9">
 																<div className="input-field">
-																	<textarea id="icon_prefix2" className="materialize-textarea area" value={industry.title}></textarea>
+																	<textarea id="icon_prefix2" required className="materialize-textarea area" value={industry.title}></textarea>
 																</div>
 															</div>
 															<div className="col s3">
 																<div className="file-field input-field left">
 																	<div className="btn right waves-effect waves-light">
 																		<span><i className="material-icons left">publish</i>Select file</span>
-																		<input type="file" />
+																		<input required type="file" />
 																	</div>
 																	<div className="file-path-wrapper">
 																		<input className="file-path validate" type="text" />
@@ -122,7 +126,7 @@ export default function Industries() {
 	return (
 			<>
 			<Layout />
-			<div  id="technologies" style={{ paddingTop: '75px', paddingLeft: '0' }} className="">
+			<div  id="industries" style={{ paddingTop: '75px', paddingLeft: '0' }} className="">
 				<div className="row">
 					<div className="col s12 indigo darken-1">
 							<div><span className="category-title left white-text">Industries</span></div>
@@ -140,7 +144,8 @@ export default function Industries() {
 										header={`Add new industry`} className="center-align"
 										trigger={<a href="#" className="btn teal waves-effect waves-light"><i className="material-icons left">add_circle_outline</i>Add industry</a>}
 										actions={[
-											<div className="center-align">
+											<form autoComplete="off" onSubmit={addIndustryHandler}>
+												<div className="center-align">
 												<Button 
 													flat 
 													modal="close" 
@@ -150,7 +155,7 @@ export default function Industries() {
 													onClick={ () => {console.log('Clicked!')} }>
 													<div className="btn-inner">
 														<div className="valign-wrapper">
-															<i className="material-icons left">add</i>Add
+															<i type="submit" className="material-icons left">add</i>Add
 														</div>
 													</div>
 												</Button>
@@ -163,15 +168,22 @@ export default function Industries() {
 													onClick={ () => {console.log('Clicked!')} }>
 													<i className="material-icons left">close</i>Cancel
 												</Button>
-												
-											</div>
+												</div>
+											</form>
 										]}>
 										<div className="center-align">
 											<form action="#">
 												<div className="row">
 													<div className="col s9" style={{ textAlign: 'right' }}>
 														<div className="input-field" >
-															<textarea id="icon_prefix2" className="materialize-textarea validate" required="" aria-required="true"></textarea>
+															<textarea 
+																id="icon_prefix2" 
+																className="materialize-textarea validate" 
+																required="" 
+																aria-required="true"
+																value={industryData.title}
+																onChange={(e) => setIndustryData({ ...industryData, title: e.target.value })}
+																></textarea>
 															<label className="left"><span style={{ textAlign: 'left' }}>Title</span></label>
 														</div>
 													</div>
@@ -180,7 +192,12 @@ export default function Industries() {
 														<div className="file-field input-field">
 															<div className="btn left waves-effect waves-light">
 																<span><i className="material-icons left">publish</i>Select file</span>
-																<input type="file" />
+																<FileBase 
+																	type="file"
+																	multiple={false}
+																	onDone={({base64}) => setIndustryData({ ...industryData, imgUrl: base64 })}
+																/>
+
 															</div>
 															<div className="file-path-wrapper">
 																<input className="file-path" type="text" />

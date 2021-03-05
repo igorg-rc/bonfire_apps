@@ -56,7 +56,7 @@ export default function Login ({ history }) {
                 </div>
               </div>
 
-              <form onSubmit={loginHandler} >
+              <form onSubmit={loginHandler}>
               {error && <span className="error-message">{error}</span>}
                 <div className="row">
                   <div className="input-field col s10 offset-s1">
