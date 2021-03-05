@@ -60,6 +60,10 @@ a i.card-icons:hover {
   visibility: hidden;
 }
 
+.btn-icon:hover {
+  color: white !important;
+}
+
 /* button.modal-actions {
   background-color: black !important;
   width: 7vw;

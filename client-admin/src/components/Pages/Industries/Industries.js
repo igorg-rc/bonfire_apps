@@ -140,7 +140,7 @@ export default function Industries() {
 									
 									<Modal
 										header={`Add new industry`} className="center-align"
-										trigger={<a href="#" className="btn teal waves-effect waves-light"><i className="material-icons left">add_circle_outline</i>Add industry</a>}
+										trigger={<button href="#" className="btn teal waves-effect waves-light"><i className="material-icons left">add_circle_outline</i>Add industry</button>}
 										actions={[
 											<form autoComplete="off" onSubmit={addIndustryHandler}>
 												<div className="center-align">
