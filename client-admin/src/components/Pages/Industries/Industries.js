@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux'
 import FileBase from 'react-file-base64'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { useHistory } from 'react-router-dom'
 
 import { getIndustries, addIndustry } from '../../../actions/industries'
 
@@ -16,7 +15,6 @@ import Layout from '../../Layout/Layout';
 
 
 export default function Industries() {
-	const history = useHistory();
 
 	const [ industryData, setIndustryData ] = useState({title: '', imgUrl: ''});
 
