@@ -1,4 +1,23 @@
 const Industry = require('../models/Industry');
+const path = require('path');
+const multer = require('multer');
+
+
+// File upload with multer
+const storage = multer.diskStorage({
+  destination: "public/uploads/img/",
+  filename: function(req, file, cb) {
+    cb(null, "img-" + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 1000000 },
+}).single("myImage");
+
+
+
 
 exports.getIndustries = async (req, res) => {
   try {
