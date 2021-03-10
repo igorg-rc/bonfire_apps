@@ -1,7 +1,8 @@
-const { fstat } = require('fs');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
 const Industry = require('../models/Industry');
+const deleteFile = require('../utils/file');
 
 
 exports.getIndustries = async (req, res) => {
@@ -59,19 +60,38 @@ exports.updateIndustry = async (req, res) => {
 
 exports.deleteIndustry = async (req, res) => {
   const { id } = req.params;
-  const imgUrl = req.file.path;
+  const image = req.file;
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No industry with id: ${id}`);
 
+  // if (!image) {
+  //   console.log('There is no image found')
+  // } else {
+  //   try {
+  //     fs.unlink(image);
+  //     console.log('Image was successfuly removed from deleted industry');
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  Industry.findById(id)
+    .then(industry => {
+      deleteFile(industry.imgUrl)
+    })
+    .catch(error => {
+      console.log(error);
+    }) 
+
   await Industry.findByIdAndRemove(id);
-  try {
-    if (imgUrl) {
-      fs.unlink(imgUrl);
-      console.log("File from deleted industry was successfuly removed");
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  
+  // try {
+  //   if (imgUrl) {
+  //     fs.unlink(imgUrl);
+  //     console.log("File from deleted industry was successfuly removed");
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
 
   res.json({ message: "Industry deleted successfully." });
 }
