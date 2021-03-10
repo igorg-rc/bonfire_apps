@@ -6,19 +6,76 @@ import {Modal, Button, Icon, TextInput, Textarea, Row, Col} from 'react-material
 import { useSelector } from 'react-redux'
 import FileBase from 'react-file-base64'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import { getIndustries, addIndustry } from '../../../actions/industries'
 
 import Layout from '../../Layout/Layout';
 
 
-
 export default function Industries() {
+	const history = useHistory();
+
+	const industries = useSelector((state) => state.industries);
+
+	const [ filename, setFilename ] = useState("Select file");
+	const [ file, setFile ] = useState();
+	const [ title, setTitle ] = useState("");
+	const [ uploadedItem, setUploadedItem ] = useState({});
+
+	const onFileChangeHandler = e => {
+		setFile(e.target.files[0]);
+		setFilename(e.target.files[0].name);
+	}
+
+	const onTitleChangeHandler = e => {
+		setTitle(e.target.value);
+	}
+
+	const cleanForm = () => {
+		setTitle("");
+		setFile();
+		setFilename("");
+	}
+
+	const onSubmit = async (e) => {
+		e.preventDefault();
+		const formData = new FormData();
+		formData.append('image', file);
+		formData.append('title', title);
+
+		// fetch("http://localhost:9000/api/industries", {
+		// 	method: "POST",
+		// 	body: formData
+		// })
+		// .then(result => {
+		// 	console.log(formData)
+		// })
+		// .catch(error => {
+		// 	console.log(error)
+		// })
+
+		cleanForm();
+		
+		try {
+			const url = "http://localhost:9000/api/industries";
+			const res = await axios.post(url, formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			})
+
+			const { filename, filepath, title } = res.data;
+			setUploadedItem({ filename, filepath, title });
+		} catch (error) {
+			console.log(error);
+		}
+
+	}
+
 
 	const [ industryData, setIndustryData ] = useState({title: '', imgUrl: ''});
 
-	const industries = useSelector((state) => state.industries);
 
 	console.log(industries);
 
@@ -28,8 +85,8 @@ export default function Industries() {
 		dispatch(getIndustries());
 	}, [dispatch]);
 
-	const addIndustryHandler = (e) => {
-		e.preventDefault();
+	const addIndustryHandler = (event) => {
+		event.preventDefault();
 
 		dispatch(addIndustry(industryData));
 	}
@@ -39,7 +96,7 @@ export default function Industries() {
 		return 	<div className="col s12 m6 l4">
 							<div className="card">
 								<div className="card-image">
-									<img src={industry.imgUrl} alt={industry.title} />
+									<img src={`http://localhost:9000/${industry.imgUrl}`} alt={industry.title} />
 								</div>
 							</div>
 
@@ -92,7 +149,7 @@ export default function Industries() {
 																<div className="file-field input-field left">
 																	<div className="btn right waves-effect waves-light">
 																		<span><i className="material-icons left">publish</i>Select file</span>
-																		<input required type="file" />
+																		<input required type="file" onChange={onFileChangeHandler} />
 																	</div>
 																	<div className="file-path-wrapper">
 																		<input className="file-path validate" type="text" />
@@ -138,11 +195,14 @@ export default function Industries() {
 							<div className="row">
 								<div className="col">
 									
+
+
+
 									<Modal
 										header={`Add new industry`} className="center-align"
 										trigger={<button href="#" className="btn teal waves-effect waves-light"><i className="material-icons left">add_circle_outline</i>Add industry</button>}
 										actions={[
-											<form autoComplete="off" onSubmit={addIndustryHandler}>
+											<form autoComplete="off" onSubmit={onSubmit} encType="multipart/form-data">
 												<div className="center-align">
 												<Button 
 													flat 
@@ -169,18 +229,19 @@ export default function Industries() {
 												</div>
 											</form>
 										]}>
+
 										<div className="center-align">
-											<form action="#">
 												<div className="row">
 													<div className="col s9" style={{ textAlign: 'right' }}>
 														<div className="input-field" >
 															<textarea 
 																id="icon_prefix2" 
+																name="title"
 																className="materialize-textarea validate" 
 																required="" 
 																aria-required="true"
-																value={industryData.title}
-																onChange={(e) => setIndustryData({ ...industryData, title: e.target.value })}
+																value={title}
+																onChange={onTitleChangeHandler}
 																></textarea>
 															<label className="left"><span style={{ textAlign: 'left' }}>Title</span></label>
 														</div>
@@ -190,11 +251,8 @@ export default function Industries() {
 														<div className="file-field input-field">
 															<div className="btn left waves-effect waves-light">
 																<span><i className="material-icons left">publish</i>Select file</span>
-																<FileBase 
-																	type="file"
-																	multiple={false}
-																	onDone={({base64}) => setIndustryData({ ...industryData, imgUrl: base64 })}
-																/>
+
+																<input type="file" name="image" onChange={onFileChangeHandler} />
 
 															</div>
 															<div className="file-path-wrapper">
@@ -203,7 +261,6 @@ export default function Industries() {
 														</div>
 													</div>
 												</div>
-											</form>
 										</div>
 									</Modal>
 								</div>

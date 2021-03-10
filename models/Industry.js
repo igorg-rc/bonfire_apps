@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const industrySchema = mongoose.Schema({
   title: {
     type: String,
-    require: true
+    require: true,
+    default: 'New industry'
   },
   imgUrl: {
     type: String,

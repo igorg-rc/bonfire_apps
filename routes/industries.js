@@ -1,26 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const {getIndustries, createIndustry} = require('../controllers/industries');
+const {getIndustries, createIndustry , getIndustry, updateIndustry, deleteIndustry} = require('../controllers/industries');
 const path = require('path');
 const multer = require('multer');
+const crypto = require('crypto');
+// const upload = multer({ dest: 'images/industries' });
 
 // File upload with multer
-const storage = multer.diskStorage({
-  destination: "public/uploads/img/",
+const myStorage = multer.diskStorage({
+  destination: function(req, res, cb) {
+    cb(null, path.join("images/industries"));
+  },
   filename: function(req, file, cb) {
-    cb(null, "img-" + Date.now() + path.extname(file.originalname));
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      if (err) return cb(err)
+
+      cb(null, "img_" + Date.now() + '_' + file.originalname);
+    })
   }
 });
 
+const fileFilter = (req, res, cb) => {
+  const type = file.mimetype;
+  if (type === 'image/jpg' || type === 'image/png' || type === 'image/jpeg') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+}
+
 const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 },
-}).single("myImage");
-
-
+  storage: myStorage,
+  // fileFilter: fileFilter,
+  limits: { fileSize: 10000000 },
+});
 
 router.get('/', getIndustries);
-router.post('/', createIndustry);
+
+router.post('/', upload.single('image'), createIndustry);
+
+router.get('/:id', getIndustry);
+router.patch('/:id', updateIndustry);
+router.delete('/:id', deleteIndustry);
 
 
 module.exports = router;

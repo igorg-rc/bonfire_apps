@@ -9,24 +9,40 @@ const logger = require('morgan');
 const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const errorHandler = require('./middleware/error');
+const multer = require('multer');
 
 // connect db
 connectDB();
 
+// File upload with multer
+// const storage = multer.diskStorage({
+//   destination: "images/industries",
+//   filename: function(req, file, cb) {
+//     cb(null, "img_" + Date.now() + '_' + file.originalname);
+//   }
+// });
+
+// const upload = multer({
+//   storage: storage,
+//   limits: { fileSize: 1000000 },
+// }).single("myImage");
+
+
 const app = express();
-
-// view engine setup
 app.use(cors());
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-
 app.use(logger('dev'));
+
+// app.use(multer({ dest: 'images/industries', storage: storage }).single("image"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
-app.use(bodyParser.json()) // for parsing application/json
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname,'images')));
+app.use('/industries', express.static(path.join(__dirname,'images', 'industries')));
 
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/private', require('./routes/private'));
@@ -46,12 +62,9 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-
 app.use(function(req, res, next) {
   res.redirect('/');
 });
-
-
 
 
 app.listen(process.env.PORT, function() {
