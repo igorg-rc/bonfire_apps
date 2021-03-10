@@ -1,3 +1,4 @@
+const { fstat } = require('fs');
 const mongoose = require('mongoose');
 const path = require('path');
 const Industry = require('../models/Industry');
@@ -44,11 +45,12 @@ exports.createIndustry = async (req, res) => {
 
 exports.updateIndustry = async (req, res) => {
   const { id } = req.params;
-  const { title, imgUrl } = req.body;
+  const title = req.body;
+  const imgUrl = req.file.path;
   
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No industry with id: ${id}`);
 
-  const updateIndustry = { creator, title, message, tags, selectedFile, _id: id };
+  const updateIndustry = { title, imgUrl, _id: id };
 
   await Industry.findByIdAndUpdate(id, updateIndustry, { new: true });
 
@@ -57,10 +59,19 @@ exports.updateIndustry = async (req, res) => {
 
 exports.deleteIndustry = async (req, res) => {
   const { id } = req.params;
+  const imgUrl = req.file.path;
 
   if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No industry with id: ${id}`);
 
   await Industry.findByIdAndRemove(id);
+  try {
+    if (imgUrl) {
+      fs.unlink(imgUrl);
+      console.log("File from deleted industry was successfuly removed");
+    }
+  } catch (error) {
+    console.log(error);
+  }
 
   res.json({ message: "Industry deleted successfully." });
 }

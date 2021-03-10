@@ -8,7 +8,7 @@ import FileBase from 'react-file-base64'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
 
-import { getIndustries, addIndustry } from '../../../actions/industries'
+import { getIndustries, addIndustry, deleteIndustry } from '../../../actions/industries'
 
 import Layout from '../../Layout/Layout';
 
@@ -73,10 +73,6 @@ export default function Industries() {
 
 	}
 
-
-	const [ industryData, setIndustryData ] = useState({title: '', imgUrl: ''});
-
-
 	console.log(industries);
 
 	const dispatch = useDispatch();
@@ -85,11 +81,6 @@ export default function Industries() {
 		dispatch(getIndustries());
 	}, [dispatch]);
 
-	const addIndustryHandler = (event) => {
-		event.preventDefault();
-
-		dispatch(addIndustry(industryData));
-	}
 
 
 	const industriesList = industries.map(industry => {
@@ -164,7 +155,7 @@ export default function Industries() {
 											<Modal
 												actions={[
 													<div className="center-align">
-														<Button flat modal="close" node="button" waves="light" className="teal white-text" onClick={ () => {console.log('Clicked!')} }><i className="material-icons left card-icons">delete</i>Delete</Button>
+														<Button flat modal="close" node="button" waves="light" className="teal white-text" onClick={ () => dispatch(deleteIndustry(industry._id)) }><i className="material-icons left card-icons">delete</i>Delete</Button>
 														<Button flat modal="close" node="button" waves="light" className="indigo darken-1 white-text center-align"><i className="material-icons left card-icons">close</i>Cancel</Button>
 													</div>
 												]}
