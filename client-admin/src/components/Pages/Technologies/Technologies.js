@@ -55,6 +55,16 @@ export default function Technologies() {
 
 	}
 
+	const onTechDelete = async (catId, techId) => {
+		try {
+			axios.delete(`/api/technologies/categories/${catId}/tech/${techId}`)
+			console.log(`Technology ${techId} was successfuly deleted`)
+		} catch (error) {
+			console.log(error)			
+		}
+		window.location.reload()
+	}
+
 	useEffect(() => {
 		dispatch(getCategories());
 	}, []);
@@ -180,7 +190,7 @@ export default function Technologies() {
 																	node="button" 
 																	waves="light" 
 																	className="teal white-text" 
-																	onClick={ () => {console.log('Clicked!')} }>
+																	onClick={ (catId, techId) => onTechDelete(tech.categoryId, tech._id) }>
 																	<i className="material-icons left card-icons">delete</i>Delete
 																</Button>
 																<Button 
@@ -195,13 +205,17 @@ export default function Technologies() {
 															</div>
 														]}
 														header={`Delete "${tech.title}" item. Are you sure?`} className="center-align"
-														trigger={<a className="indigo-text modal-trigger right" href="#modal-delete-tech"><i className="material-icons actions valign-wrapper">delete</i></a>}>
+														trigger={<a className="indigo-text modal-trigger right" href="#modal-delete-tech">
+																			<i className="material-icons actions valign-wrapper" onClick={() => console.log(tech._id, tech.categoryId)}>delete</i>
+																		</a>}>
 													</Modal>
 
 													<Modal
 														header={`Update "${tech.title}" item`} 
 														className="center-align"
-														trigger={<a className="indigo-text modal-trigger right" href="#modal-delete-tech"><i className="material-icons actions valign-wrapper">create</i></a>}
+														trigger={<a className="indigo-text modal-trigger right" href="#modal-delete-tech">
+																			<i className="material-icons actions valign-wrapper" onClick={() => console.log(tech._id, tech.title, tech.imgUrl, tech.categoryId)}>create</i>
+																		</a>}
 														actions={[
 															<div className="center-align">
 																<Button 

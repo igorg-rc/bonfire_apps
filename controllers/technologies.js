@@ -6,7 +6,7 @@ const deleteFile = require('../utils/file');
 
 exports.getCategories = async (req, res) => {
   try {
-    const categories = await Category.find().populate('technologies', 'title imgUrl').select('title _id imgUrl technologies');
+    const categories = await Category.find().populate('technologies', 'title imgUrl categoryId').select('title _id imgUrl technologies');
     // const categories = await Category.find().populate({ path: 'technologies', select: 'title imgUrl' });
     console.log(categories);
     res.status(200).json(categories);
