@@ -1,0 +1,138 @@
+.item-title {
+  font-size: 2rem;
+}
+
+/* .item-image {
+  height: 10vh;
+  width: auto;
+} */
+
+.card {
+  background-color: #f5f5f5 !important;
+}
+
+.card-content {
+  padding: 0 10px !important;
+  margin-top: -1vh !important;
+}
+
+.card-action, .flex {
+  display: flex;
+  flex-direction: row;
+  align-content: flex-start;
+  align-self: center;
+
+  justify-content: flex-end;
+}
+
+a i.card-icons {
+  padding: 7px 0;
+  margin-right: -0.35vw !important;
+}
+
+a i.card-icons:hover {
+  color: #009688 !important;
+  cursor: pointer; 
+}
+
+/* Modal settings */
+.modal {
+  width: 40%;
+}
+
+.modal h4 {
+  font-size: 2rem;
+}
+
+.modal label {
+  background-color: #fafafa;
+  font-size: 1rem;
+}
+
+.modal button {
+  text-align: left !important;
+  margin-right: 1.5% !important;
+  /* margin-bottom: 10px !important; */
+  /* left: -33%;  */
+}
+
+/* .modal-trigger {
+  background-color: #3949ab;
+  border: 'none';
+  border: none;
+  margin-right: -1.17vw;
+}
+
+.modal-trigger:active {
+  background-color: #3949ab;
+}
+
+.modal-trigger i:hover {
+  color: #009688 !important;
+} */
+
+.file-path-wrapper {
+  visibility: hidden;
+}
+
+.btn-icon:hover {
+  color: white !important;
+}
+
+/* button.modal-actions {
+  background-color: black !important;
+  width: 7vw;
+} */
+
+/* button.modal-actions i, span {
+  text-align: center;
+  margin: 0 10px;
+} */
+
+/* File input file_path hiding */
+/* 
+https://fireflysemantics.medium.com/styling-a-file-input-button-with-materialize-ad9dd5326038
+.btn-file {
+  position: relative !important;
+  overflow: hidden !important;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+} */
+/*  */
+
+@media(max-width: 650px) {
+  .item-title {
+    font-size: 1.5rem;
+    text-align: center !important;
+  }
+ 
+  .item-image {
+    width: 100%;
+    height: auto;
+  }
+
+  #industry-item {
+    display: block !important;
+    float: left !important;
+  }
+}
+
+@media(min-width: 900px) and (max-width: 1300px) {
+  #industry-item {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+}

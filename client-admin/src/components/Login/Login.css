@@ -1,0 +1,69 @@
+/* ::-webkit-scrollbar {
+  display: none !important;
+} */
+/* body {
+  overflow-y: hidden;
+} */
+
+/* Hide scrollbar */
+#page {
+  width: 100%;
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+.logo-handler {
+  padding-top: 3vh !important;
+}
+
+
+.logo-handler img {
+  width: 3.5vw;
+}
+
+
+.form-wrapper {
+  padding-top: 3vh !important;
+}
+
+
+.form-wrapper form {
+  padding: 5vh 0;
+}
+
+.form-wrapper form label, 
+.form-wrapper form input,
+i.material-icons:focus {
+  color: white !important;
+  background: transparent !important;
+}
+
+.form-wrapper label:focus,
+i.active {
+  color: white !important;
+  background: transparent !important;
+}
+
+ /* label focus color */
+ .form-wrapper .input-field input[type=text]:focus + label,
+ .form-wrapper .input-field input[type=password]:focus + label {
+  color: white !important;
+  
+}
+/* label underline focus color */
+.form-wrapper .input-field input[type=text]:focus,
+.form-wrapper .input-field input[type=password]:focus {
+  border-bottom: 1px solid white !important;
+  box-shadow: 0 1px 0 0 white !important;
+}
+
+
+.error-message {
+  width: 100%;
+  display: inline-block;
+  padding: 5px;
+  background: red;
+  color: #fff;
+  text-align: center;
+  margin: 0.5rem 0;
+}

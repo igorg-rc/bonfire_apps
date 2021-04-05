@@ -1,0 +1,32 @@
+.Item_1 {
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(/src/img/slider/1_.jpg);
+}
+
+.Item_2 {
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(/src/img/slider/2_.jpg);
+}
+
+.Item_3 {
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-image: url(/src/img/slider/3_.jpg);
+}
+
+.Overlay {
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 378px) {
+}
