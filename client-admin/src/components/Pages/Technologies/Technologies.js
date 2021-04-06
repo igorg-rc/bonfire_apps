@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { technologies } from './TechnologiesData'
 import { Modal, Button } from 'react-materialize'
 import axios from 'axios'
 import { Link, useHistory, useRouteMatch } from 'react-router-dom'
@@ -13,17 +12,25 @@ import { updateCategory, deleteCategory } from '../../../api'
 
 export default function Technologies() {
 	const [ category, setCategory ] = useState({ title: "", technologies: [] });
+	const [ technology, setTechnology ] = useState({ title: "", image: {} });
 	const categories = useSelector(state => state.categories);
+
+	const [ title, setTitle ] = useState("");
+	const [ file, setFile ] = useState();
+	const [ filename, setFilename ] = useState();
 
 	const { handleSubmit, register } = useForm();
 	const history = useHistory();
 	const match = useRouteMatch();
 
-	const [ currentCategoryId, setCurrentCategoryId ] = useState(); 
+	const [ currentCategoryId, setCurrentCategoryId ] = useState();
+	const [ currentTechId, setCurrentTechId ] = useState({ catId: "", techId: "" });
+	const [ uploadedItem, setUploadedItem ] = useState({}); 
+	const [ id, setId ] = useState();
 
 	const onCategoryAdd = handleSubmit((data, e) => {
 		e.preventDefault();
-		axios.post('http://localhost:9000/api/technologies/categories', data, {
+		axios.post('/api/technologies/categories', data, {
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -43,8 +50,7 @@ export default function Technologies() {
 
 	const onCategoryEdit = (e, data, id) => {
 		e.preventDefault();
-		// setCategory({title: data})
-
+		console.log({...category})
 		axios.patch(`/api/technologies/categories/${currentCategoryId}`, {...category}, {
 			headers: {
 				"Content-Type": "application/json"
@@ -55,14 +61,66 @@ export default function Technologies() {
 
 	}
 
+	const onFileChangeHandler = e => {
+		setFile(e.target.files[0]);
+		setFilename(e.target.files[0].name);
+	}
+
+	const onTitleChangeHandler = e => {
+		setTitle(e.target.value);
+	}
+
+	const onTechAdd = async e => {
+		e.preventDefault();
+		const techData = new FormData();
+		techData.append('title', title);
+		techData.append('image', file);
+		console.log(title, file, currentCategoryId);
+		try {
+			const res = await axios.post(`/api/technologies/categories/${currentCategoryId}`, techData, {
+				headers: {
+					'Accept': 'multipart/form-data',
+					'Content-Type': 'multipart/form-data'
+				},
+				body: techData
+			})
+		} catch (error) {
+			console.log(error);
+		}
+		window.location.reload();
+	}
+
+	const onTechEdit = async (e) => {
+		e.preventDefault();
+		const techData = new FormData();
+		techData.append('title', title);
+		techData.append('image', file);
+		console.log(currentTechId.catId, currentTechId.techId);
+		
+		try {
+			const res = await axios.patch(`/api/technologies/categories/${currentTechId.catId}/tech/${currentTechId.techId}`, techData, { 
+				headers: { 'Content-Type': 'multipart/form-data' },
+				body: techData
+			})
+
+			const { title } = res.data;
+			setUploadedItem({ title });
+			console.log(res);
+
+		} catch (error) {
+			console.log(error);
+		}
+		window.location.reload();
+	}
+
 	const onTechDelete = async (catId, techId) => {
 		try {
-			axios.delete(`/api/technologies/categories/${catId}/tech/${techId}`)
-			console.log(`Technology ${techId} was successfuly deleted`)
+			axios.delete(`/api/technologies/categories/${catId}/tech/${techId}`);
+			console.log(`Technology ${techId} was successfuly deleted`);
 		} catch (error) {
 			console.log(error)			
 		}
-		window.location.reload()
+		window.location.reload();
 	}
 
 	useEffect(() => {
@@ -70,7 +128,7 @@ export default function Technologies() {
 	}, []);
 
 	const categoriesList = categories.map(category => {
-		return <div className="tech-category">
+		return <div className="tech-category" key={category._id}>
 							<div className="row indigo darken-1" style={{ marginBottom: '10px !important' }}>
 								<div className="valign-wrapper">
 									<div className="col s6">
@@ -97,7 +155,7 @@ export default function Technologies() {
 																className="teal white-text modal-actions" 
 																type="submit"
 																onClick={()=>console.log(category._id)}
-																>
+															>
 																<div className="btn-inner">
 																	<div className="valign-wrapper">
 																		<i className="material-icons left">done</i>Update
@@ -121,7 +179,7 @@ export default function Technologies() {
 															<div className="col s12">
 																<div className="input-field">
 																	<textarea 
-																		id="icon_prefix2" 
+																		id={category._id} 
 																		className="materialize-textarea" 
 																		defaultValue={category.title}
 																		onChange={(e) => setCategory({...category, title: e.target.value})}
@@ -129,7 +187,6 @@ export default function Technologies() {
 																	</textarea>
 																</div>
 															</div>
-															
 														</div>
 												</div>
 											</Modal>
@@ -214,33 +271,34 @@ export default function Technologies() {
 														header={`Update "${tech.title}" item`} 
 														className="center-align"
 														trigger={<a className="indigo-text modal-trigger right" href="#modal-delete-tech">
-																			<i className="material-icons actions valign-wrapper" onClick={() => console.log(tech._id, tech.title, tech.imgUrl, tech.categoryId)}>create</i>
+																			<i className="material-icons actions valign-wrapper" onClick={() => setCurrentTechId({ catId: tech.categoryId, techId: tech._id })}>create</i>
 																		</a>}
 														actions={[
 															<div className="center-align">
-																<Button 
-																	flat 
-																	modal="close" 
-																	node="button" 
-																	waves="light"
-																	className="teal white-text modal-actions" 
-																	onClick={ () => {console.log('Clicked!')} }>
-																	<div className="btn-inner">
-																		<div className="valign-wrapper">
-																			<i className="material-icons left">done</i>Update
+																<form onSubmit={onTechEdit} encType="multipart/form-data">
+																	<Button 
+																		flat 
+																		modal="close" 
+																		node="button" 
+																		waves="light"
+																		className="teal white-text modal-actions" 
+																		onClick={() => console.log(tech.title)}>
+																		<div className="btn-inner">
+																			<div className="valign-wrapper">
+																				<i className="material-icons left">done</i>Update
+																			</div>
 																		</div>
-																	</div>
-																</Button>
-																<Button 
-																	flat 
-																	modal="close" 
-																	node="button" 
-																	waves="light"
-																	className="indigo darken-1 white-text modal-actions" 
-																	onClick={ () => {console.log('Clicked!')} }>
-																	<i className="material-icons left">close</i>Cancel
-																</Button>
-																
+																	</Button>
+																	<Button 
+																		flat 
+																		modal="close" 
+																		node="button" 
+																		waves="light"
+																		className="indigo darken-1 white-text modal-actions" 
+																		>
+																		<i className="material-icons left">close</i>Cancel
+																	</Button>
+																</form>
 															</div>
 														]}>
 														<div className="center-align">
@@ -248,14 +306,25 @@ export default function Technologies() {
 																<div className="row">
 																	<div className="col s9">
 																		<div className="input-field">
-																			<textarea id="icon_prefix2" className="materialize-textarea" defaultValue={tech.title}></textarea>
+																			<textarea 
+																				id={`id-${tech._id}`} 
+																				name="title"
+																				className="materialize-textarea" 
+																				defaultValue={tech.title}
+																				onChange={onTitleChangeHandler}
+																			>
+																			</textarea>
 																		</div>
 																	</div>
 																	<div className="col s3">
 																		<div className="file-field input-field">
 																			<div className="btn teal right waves-effect waves-light">
 																				<span><i className="material-icons left">publish</i>Select file</span>
-																				<input type="file" />
+																				<input 
+																					type="file" 
+																					name="image"
+																					onChange={onFileChangeHandler} 
+																				/>
 																			</div>
 																			<div className="file-path-wrapper">
 																				<input className="file-path validate" type="text" />
@@ -276,39 +345,55 @@ export default function Technologies() {
 					<div className="col">
 					<Modal
 							header={`Add new technology`} className="center-align"
-							trigger={<a href="#" style={{ marginLeft: '-0.5vw' }} className="btn indigo darken-1 waves-effect waves-light"><i className="material-icons left">add_circle_outline</i>Add technology</a>}
+							trigger={<div>
+												<button
+													onClick={() => setCurrentCategoryId(category._id)}
+													style={{ marginLeft: '-0.5vw' }} 
+													className="btn indigo darken-1 waves-effect waves-light">
+														<i  className="material-icons left">add_circle_outline</i>Add technology
+												</button>
+											</div>}
 							actions={[
 								<div className="center-align">
-									<Button 
-										flat 
-										modal="close" 
-										node="button" 
-										waves="light"
-										className="teal white-text modal-actions" 
-										onClick={ () => {console.log('Clicked!')} }>
-										<div className="btn-inner">
-											<div className="valign-wrapper">
-												<i className="material-icons left">add</i>Add
+									<form onSubmit={onTechAdd} encType="multipart/form-data">
+										<Button 
+											flat 
+											modal="close" 
+											node="button" 
+											waves="light"
+											type="submit"
+											className="teal white-text modal-actions" 
+											onClick={ () => {console.log('Clicked!')} }>
+											<div className="btn-inner">
+												<div className="valign-wrapper">
+													<i className="material-icons left">add</i>Add
+												</div>
 											</div>
-										</div>
-									</Button>
-									<Button 
-										flat 
-										modal="close" 
-										node="button" 
-										waves="light"
-										className="indigo darken-1 white-text modal-actions" 
-										onClick={ () => {console.log('Clicked!')} }>
-										<i className="material-icons left">close</i>Cancel
-									</Button>
+										</Button>
+										<Button 
+											flat 
+											modal="close" 
+											node="button" 
+											waves="light"
+											className="indigo darken-1 white-text modal-actions" 
+											onClick={ () => {console.log('Clicked!')} }>
+											<i className="material-icons left">close</i>Cancel
+										</Button>
+									</form>
 								</div>
 							]}>
 							<div className="center-align">
-								<form action="#">
 									<div className="row">
 										<div className="col s9" style={{ textAlign: 'right' }}>
 											<div className="input-field" >
-												<textarea id="icon_prefix2" className="materialize-textarea validate" required="" aria-required="true"></textarea>
+												<input 
+													type="text" 
+													required="" 
+													aria-required="true"
+													name="title"
+													onChange={onTitleChangeHandler}
+												/>
+												
 												<label className="left"><span style={{ textAlign: 'left' }}>Title</span></label>
 											</div>
 										</div>
@@ -317,7 +402,11 @@ export default function Technologies() {
 											<div className="file-field input-field">
 												<div className="btn left waves-effect waves-light">
 													<span><i className="material-icons left">publish</i>Select file</span>
-													<input type="file" />
+													<input 
+														type="file" 
+														onChange={onFileChangeHandler}
+														name="image"
+													/>
 												</div>
 												<div className="file-path-wrapper">
 													<input className="file-path" type="text" />
@@ -325,7 +414,6 @@ export default function Technologies() {
 											</div>
 										</div>
 									</div>
-								</form>
 							</div>
 						</Modal>
 					</div>
@@ -335,7 +423,6 @@ export default function Technologies() {
 		</div>
 	</div>
 	});
-
 
 	return ( 
 					<>
@@ -389,8 +476,17 @@ export default function Technologies() {
 												<div className="row">
 													<div className="col s12" style={{ textAlign: 'right' }}>
 														<div className="input-field" >
-															<textarea id="icon_prefix2" name="title" onChange={(e) => setCategory({ title: e.target.value })} className="materialize-textarea validate" required="" aria-required="true" ref={register}></textarea>
-															<label className="left"><span style={{ textAlign: 'left' }}>Title</span></label>
+															<textarea 
+																type="text"
+																id="icon_prefix2" 
+																name="title" 
+																onChange={(e) => setCategory({ title: e.target.value })}
+																className="materialize-textarea validate" 
+																required="" 
+																aria-required="true" 
+																ref={register}>
+															</textarea>		
+															<label htmlFor="title" className="left"><span style={{ textAlign: 'left' }}>Title</span></label>
 														</div>
 													</div>
 
