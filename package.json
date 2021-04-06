@@ -6,7 +6,8 @@
     "start": "node app.js",
     "server": "nodemon app.js",
     "client-admin": "npm run start --prefix client-admin",
-    "dev": "concurrently \"npm run server\" \"npm run client-admin\"",
+    "client-site": "npm run start --prefix client-site",
+    "dev": "concurrently \"npm run server\" \"npm run client-admin\" \"npm run client-site\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm install --prefix client-admin && npm run build --prefix client-admin"
   },
   "dependencies": {

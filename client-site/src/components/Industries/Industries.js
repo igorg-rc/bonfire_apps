@@ -1,10 +1,19 @@
-import React from 'react'
-import ScrollAnimation from 'react-animate-on-scroll' 
+import React, { useState, useEffect } from 'react'
 
 import classes from './Industries.module.css'
-import { industries } from './IndustriesData'
+// import { industries } from './IndustriesData'
 
 export default function Industries() {
+
+  const [ industries, setIndustries ] = useState([]);
+
+  useEffect(() => {
+    const fetchIndustries = async () => {
+      const industries = await fetch('/api/industries').then(data => data.json());
+      setIndustries(industries);
+    }
+    fetchIndustries();
+  }, [])
   
   const industriesList = industries.map(industry => {
     return  <div className="col s12 m6 l4">
@@ -30,19 +39,6 @@ export default function Industries() {
           </div>
         </div>
       </div>
-
     </>
   )
 }
-
-
-// return  <div className="col s12 l4">
-// <div className={classes.Holder}>
-//   <img src={industry.imgUrl} alt="Avatar" class={classes.Img} />
-//   <div className={classes.Overlay}>
-//     <div className={classes.OverlayText}>
-//       <h5>{industry.title}</h5>
-//     </div>
-//   </div>
-// </div> 
-// </div>
