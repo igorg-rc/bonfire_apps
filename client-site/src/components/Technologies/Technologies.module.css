@@ -3,6 +3,14 @@
   animation: fadeIn ease 5s;
 }
 
+.TabLink {
+  color: #009688;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+
 @keyframes fadeIn {
   0% {
     opacity: 0;

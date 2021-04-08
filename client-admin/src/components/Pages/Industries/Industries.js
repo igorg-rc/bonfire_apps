@@ -72,7 +72,6 @@ export default function Industries() {
 		history.push("/industries");
 	}
 	
-	
 	const [currentId, setCurrentId ] = useState("");
 
 	const EditIndustryHandler = async (e, id) => {

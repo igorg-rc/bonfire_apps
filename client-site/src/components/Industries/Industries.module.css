@@ -2,7 +2,7 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .Img {

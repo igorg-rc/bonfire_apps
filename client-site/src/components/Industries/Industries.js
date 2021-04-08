@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
 import classes from './Industries.module.css'
-// import { industries } from './IndustriesData'
 
 export default function Industries() {
 
@@ -16,7 +15,7 @@ export default function Industries() {
   }, [])
   
   const industriesList = industries.map(industry => {
-    return  <div className="col s12 m6 l4">
+    return  <div className="col s12 m6 l4" key={industry._id}>
               <div className={classes.Holder}>
                 <img src={industry.imgUrl} alt={industry.title} className={classes.Img} />
                 <div>
