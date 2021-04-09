@@ -8,6 +8,8 @@
 
 .react-tabs__tab--selected {
   background-color: transparent;
+  display: none;
+  
   border-bottom: 2px solid #b2dfdb;
 }
 
@@ -16,11 +18,15 @@
 }
 
 .react-tabs__tab-list hr {
-  background-color: tomato !important;
-  border-top: none;
 }
 
 .tech-tab {
+  display: inline;
+  outline: none;
+  cursor: pointer;
+}
+
+.tech-tab::selection {
   display: inline;
 }
 
@@ -29,6 +35,7 @@
   margin-left: -5px;
   display: inline;
 }
+
 .tech-list > li {
   display: inline;
 }

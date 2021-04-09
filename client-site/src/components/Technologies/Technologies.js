@@ -39,7 +39,7 @@ export default function Technologies() {
                   <div className="row">
                       <TabList className="tab-list">
                           { categories.map(cat => 
-                            <Tab key={cat._id} className="col l3 s12 tech-tab">
+                            <Tab key={cat._id} className={`col l3 s12 tech-tab`}>
                               <a className={classes.TabLink} href={`technologies#${cat.title}`}>{ cat.title }</a>
                             </Tab>  
                           )}
