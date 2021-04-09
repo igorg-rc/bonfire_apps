@@ -5,13 +5,13 @@ import M from 'materialize-css/dist/js/materialize.min.js'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 import classes from './Technologies.module.css'
+import './Technologies.css'
 
 export default function Technologies() {
   const [ instance, setInstance ] = useState();
   const [ categories, setCategories ] = useState([]);
 
   useEffect(() => {
-    
     const getCategories = async () => {
       try {
         const res = await fetch('/api/technologies/categories');
@@ -24,7 +24,6 @@ export default function Technologies() {
     }
     
     getCategories();
-    setInstance(M.Tabs.init(document.querySelector('.tabs'), {}))
 
   }, []);
   
@@ -35,45 +34,38 @@ export default function Technologies() {
           <ScrollAnimation animateIn="fadeIn">
             <h1 className="block-title">Technologies</h1>
             <section id="technologies-content">
-              <div className="row">
-                <ul className="tabs grey darken-4 teal-text">
-                  <li className="tab col s3"><a href="#Frontend">Frontend</a></li>
-                  <li className="tab col s3"><a href="#Backend">Backend</a></li>
-                  <li className="tab col s3"><a href="#API">API</a></li>
-                  <li className="tab col s3"><a href="#Tools">Tools</a></li>
-                </ul>
-
-               
-              </div>
-
-              <div>
+              <div id="industries-content">
                 <Tabs>
-                  <TabList >
-                    { categories.map(cat => 
-                      <Tab style={{ display: 'inline', marginRight: '10px' }} className=""><a className={classes.TabLink} href={`#${cat.title}`}>{ cat.title }</a></Tab>  
-                    )}
-                  </TabList>
+                  <div className="row">
+                      <TabList className="tab-list">
+                          { categories.map(cat => 
+                            <Tab key={cat._id} className="col l3 s12 tech-tab">
+                              <a className={classes.TabLink} href={`technologies#${cat.title}`}>{ cat.title }</a>
+                            </Tab>  
+                          )}
+                      </TabList>
+                  </div>
 
                   
                   { categories.map(cat => {
-                    return  <TabPanel>
-                              {cat.technologies.map(technology => (
-                                <ul style={{ display: 'flex', flexDirection: 'row' }}>
-                                  <li style={{ display: 'inline' }}>
-                                    <div className="col s6 l3 valign-wrapper tech-block">
-                                      <img className="tech-img" src={technology.imgUrl} alt={technology.title} />
-                                      <h5 className="tech-title center-align">{technology.title}</h5>
-                                    </div>
-                                  </li>
-                                </ul>
-                              ))}
+                    return  <TabPanel> 
+                              <div className="row" >
+                                {cat.technologies.map(technology => (
+                                  <ul className="tech-list">
+                                    <li className="tech-list-item">
+                                      <div className="col ofset-s3 s6 l3 valign-wrapper" style={{ paddingBottom: '30px' }}>
+                                        <img className="tech-img" src={technology.imgUrl} alt={technology.title} />
+                                        <h5 className="tech-title center-align">{technology.title}</h5>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                ))}
+                              </div> 
                             </TabPanel>
                     })
                   }
                 </Tabs>
               </div>
-
-
             </section>
           </ScrollAnimation>
           </div>

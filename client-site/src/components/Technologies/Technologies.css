@@ -1,0 +1,43 @@
+.react-tabs__tab--selected {
+  color: red;
+}
+
+.Technologies_TabLink__3hdTq {
+
+}
+
+.react-tabs__tab--selected {
+  background-color: transparent;
+  border-bottom: 2px solid #b2dfdb;
+}
+
+.react-tabs__tab--selected a {
+  color: #b2dfdb;
+}
+
+.react-tabs__tab-list hr {
+  background-color: tomato !important;
+  border-top: none;
+}
+
+.tech-tab {
+  display: inline;
+}
+
+.tech-list {
+  padding-left: 0;
+  margin-left: -5px;
+  display: inline;
+}
+.tech-list > li {
+  display: inline;
+}
+
+.tech-list-item {
+  padding-bottom: 20px !important;
+
+}
+
+.tech-list li {
+  padding-bottom: 20px !important;
+}
