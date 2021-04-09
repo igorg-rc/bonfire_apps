@@ -7,7 +7,7 @@ const path = require('path');
 const cors = require('cors');
 const logger = require('morgan');
 const jwt = require('jsonwebtoken');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const errorHandler = require('./middleware/error');
 const multer = require('multer');
 
@@ -25,8 +25,8 @@ app.use(cors({
 }));
 app.use(logger('dev'));
 
-app.use(bodyParser.json({ limit: "30mb", extended: true }));
-app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
+app.use(express.json({ limit: "30mb", extended: true }));
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -41,6 +41,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/private', require('./routes/private'));
 app.use('/api/industries', require('./routes/industries'));
 app.use('/api/technologies', require('./routes/technologies'));
+app.use('/api/messages', require('./routes/messages'));
 
 // Error Handler (Should be last piece of middleware)
 app.use(errorHandler);

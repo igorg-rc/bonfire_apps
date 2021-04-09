@@ -1,10 +1,40 @@
-import React from 'react'
-import { Container, Col, Row, Form, TextInput, Textarea } from 'react-materialize'
+import React, { useState } from 'react'
+import { Container } from 'react-materialize'
 import ScrollAnimation from 'react-animate-on-scroll'
 import classes from './ContactUs.module.css'
 import img from '../../img/dbs.png'
 
 export default function ContactUs() {
+  const [ message, setMessage ] = useState();
+
+  const changeHandler = event => {
+    setMessage({ ...message, [event.target.name]: event.target.value })
+  };
+  
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    console.log(JSON.stringify(message));
+
+    try {
+      const data = await fetch('/api/messages', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+      })
+      console.log(data);
+
+    } catch (error) {
+      console.log(error);
+    }
+
+    setMessage({
+
+    });
+  };
+
   return (
     <div className="teal white-text block">
       <div id="contactUs" className="row">
@@ -14,18 +44,39 @@ export default function ContactUs() {
           <div id="contact-form">
           <form>
             <div className="input-field s12 teal-text text-lighten-4">
-              <input type="text" id="name" className="teal-text text-lighten-4" />
-              <label for="name" className="teal-text text-lighten-4">Name</label>
+              <input 
+                id="name" 
+                type="text"
+                name="senderName" 
+                className="teal-text text-lighten-4" 
+                autoComplete="off"
+                onChange={changeHandler}  
+              />
+              <label for="senderName" className="teal-text text-lighten-4">Name</label>
             </div>
+
             <div className="input-field s12 teal-text text-lighten-4">
-              <input type="text" id="email" className="teal-text text-lighten-4" />
-              <label for="email" className="teal-text text-lighten-4">Email</label>
+              <input 
+                id="email" 
+                type="text" 
+                name="senderEmail"
+                className="teal-text text-lighten-4" 
+                onChange={changeHandler}  
+              />
+              <label for="senderEmail" className="teal-text text-lighten-4">Email</label>
             </div>
+
             <div className="input-field text-lighten-4">
-              <textarea id="message" className="teal-text text-lighten-4 materialize-textarea"></textarea>
-              <label for="message" className="teal-text text-lighten-4">Message</label>
+              <textarea 
+                id="message_body" 
+                name="messageBody"
+                className="teal-text text-lighten-4 materialize-textarea"
+                onChange={changeHandler}
+              >
+              </textarea>
+              <label for="messageBody" className="teal-text text-lighten-4">Message</label>
             </div>
-            <a className="btn button teal teal-text text-lighten-4 left"><span>Send</span><i className="material-icons right">send</i></a>
+            <a onClick={onSubmit} className="btn button teal teal-text text-lighten-4 left"><span>Send</span><i className="material-icons right">send</i></a>
           </form>
           </div>
         </ScrollAnimation>

@@ -14,9 +14,6 @@
   color: #b2dfdb;
 }
 
-.react-tabs__tab--selected {
-  color:red !important;
-}
 
 
 @keyframes fadeIn {
