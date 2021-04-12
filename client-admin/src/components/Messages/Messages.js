@@ -1,12 +1,36 @@
 import React, { useState, useEffect } from 'react'
 import DataTable from 'react-data-table-component'
-import  {columns, data} from '../Pages/Table/MessagesData'
+// import  {data} from '../Pages/Table/MessagesData'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+
+// import fetchMessages from '../../api/index'
+
+
 import SortIcon from "@material-ui/icons/ArrowDownward"
 import Layout from '../Layout/Layout'
 
 import './Messages.css'
+
+const columns = [
+  {
+    name: "Name",
+    selector: "name",
+    sortable: true
+  },
+  {
+    name: "Date",
+    selector: "date",
+    sortable: true,
+    right: true
+  }
+];
+
+
+
+const data = [
+
+];
 
 const customStyles = {
   title: {
@@ -50,26 +74,25 @@ export default function Messages() {
 	const [perPage, setPerPage] = useState(15);
 	const [error, setError] = useState("");
   const [privateData, setPrivateData] = useState("");
+	const [ messages, setMessages ] = useState([]);
 
-  useEffect(() => {
-    const fetchPrivateDate = async () => {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      };
+	const messagesList = messages.map(message => {
+		return {name: message.senderName, date: message.createdAt}
+	})
 
-      try {
-        const { data } = await axios.get("/api/private", config);
-        setPrivateData(data.data);
-      } catch (error) {
-        localStorage.removeItem("authToken");
-        setError("You are not authorized!");
-      }
-    };
+	useEffect(() => {
+		const fetchMessages = async () => {
+			try {
+				const result = await axios.get('/api/messages');
+				const messages = result.data;
+				setMessages(messages);
+				console.log('Messages list: ', messages);
+			} catch (error) {
+				console.log(error);
+			}
+		}
 
-    fetchPrivateDate();
+    fetchMessages();
   }, []);
 
 	return (
@@ -84,23 +107,13 @@ export default function Messages() {
 				<div className="col s12 m4 l4" style={{ paddingTop: '1.5vh'}}>
 
 				<div className="left" style={{ width: '100%' }}>
-					{/* <TablePagination
-						columns="name.time.date"
-						perPageItemCount={ 20 }
-						totalCount={ data.length  }
-						arrayOption={ [["size", 'all', ', ']] }
-						className="left"
-						data={ data }
-						headers={ Header }
-					/> */}
 
 				<div style={{ display: 'flex', flexDirection: 'column-reverse', marginTop: '-1.5vh', border: '' }}>
 					<DataTable
 						className="paginate-table"
 						paginationPerPage={perPage}
-						// style={{ border: '1px solid green'}}
 						columns={columns}
-						data={data}
+						data={messagesList}
 						defaultSortField="title"
 						sortIcon={<SortIcon />}
 						pagination
@@ -110,24 +123,6 @@ export default function Messages() {
 				</div>	
 		</div>
 	
-{/* 				
-				<Pagination
-					target="#messages"
-					activePage={3}
-					items={5}
-					leftBtn={<Icon>chevron_left</Icon>}
-					rightBtn={<Icon>chevron_right</Icon>}
-				/> */}
-
-				{/* <ul class="pagination">
-					<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-					<li class="active"><a href="#!">1</a></li>
-					<li class="waves-effect"><a href="#!">2</a></li>
-					<li class="waves-effect"><a href="#!">3</a></li>
-					<li class="waves-effect"><a href="#!">4</a></li>
-					<li class="waves-effect"><a href="#!">5</a></li>
-					<li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-				</ul> */}
 
 				</div>
 				<div className="col s12 m8 l8">

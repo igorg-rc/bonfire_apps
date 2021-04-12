@@ -8,8 +8,8 @@ export default class Navigation extends Component {
   componentDidMount() {
     
   document.addEventListener('DOMContentLoaded', function() {
-    let elems = document.querySelector('.sidenav');
-    let instance = M.Sidenav.init(elems, {
+    // let elems = document.querySelector('.sidenav');
+    let instance = M.Sidenav.init(document.querySelector('.sidenav'), {
       edge: 'left', 
       menuWidth: 200,
       inDuration: 300,
@@ -41,7 +41,7 @@ export default class Navigation extends Component {
         <div id="navigation">
           <div className="navbar-fixed">
             <nav className="main-nav">
-              <div class="nav-wrapper">
+              <div className="nav-wrapper">
                 <div className="container">
                   <Link 
                     href="#helloscreen"
@@ -53,8 +53,8 @@ export default class Navigation extends Component {
                     className="left"
                   >BonfireApps
                   </Link>
-                  <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
-                  <ul class="right hide-on-med-and-down sidedrawer">
+                  <a href="#" data-target="mobile-demo" className="sidenav-trigger right"><i className="material-icons">menu</i></a>
+                  <ul className="right hide-on-med-and-down sidedrawer">
                     <li>
                       <Link 
                         href="#technologies"
@@ -94,7 +94,7 @@ export default class Navigation extends Component {
             </div>
           </nav>
         </div> 
-          <ul class="sidenav grey darken-4" id="mobile-demo">
+          <ul className="sidenav grey darken-4" id="mobile-demo">
             <li>
               <span className="hover hover-3"></span>
               <Link 

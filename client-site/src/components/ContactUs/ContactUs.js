@@ -1,20 +1,23 @@
 import React, { useState } from 'react'
 import { Container } from 'react-materialize'
 import ScrollAnimation from 'react-animate-on-scroll'
-import classes from './ContactUs.module.css'
-import img from '../../img/dbs.png'
 
 export default function ContactUs() {
-  const [ message, setMessage ] = useState();
+  const [ message, setMessage ] = useState({});
 
   const changeHandler = event => {
     setMessage({ ...message, [event.target.name]: event.target.value })
   };
+
+  const clearFields = (event) => {
+    setMessage({ senderName: '', senderEmail: '', messageBody: '' });
+  }
   
   const onSubmit = async (event) => {
     event.preventDefault();
     console.log(JSON.stringify(message));
-
+    clearFields();
+    console.log(message);
     try {
       const data = await fetch('/api/messages', {
         method: 'POST',
@@ -24,15 +27,12 @@ export default function ContactUs() {
         },
         body: JSON.stringify(message)
       })
-      console.log(data);
+      console.log('Message was sent', data);
 
+      
     } catch (error) {
       console.log(error);
     }
-
-    setMessage({
-
-    });
   };
 
   return (
@@ -76,7 +76,7 @@ export default function ContactUs() {
               </textarea>
               <label for="messageBody" className="teal-text text-lighten-4">Message</label>
             </div>
-            <a onClick={onSubmit} className="btn button teal teal-text text-lighten-4 left"><span>Send</span><i className="material-icons right">send</i></a>
+            <button type="submit" onClick={onSubmit} className="btn button teal teal-text text-lighten-4 left"><span>Send</span><i className="material-icons right">send</i></button>
           </form>
           </div>
         </ScrollAnimation>

@@ -1,6 +1,5 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import ScrollAnimation from 'react-animate-on-scroll'
-import M from 'materialize-css/dist/js/materialize.min.js'
 
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
@@ -8,7 +7,6 @@ import classes from './Technologies.module.css'
 import './Technologies.css'
 
 export default function Technologies() {
-  const [ instance, setInstance ] = useState();
   const [ categories, setCategories ] = useState([]);
 
   useEffect(() => {

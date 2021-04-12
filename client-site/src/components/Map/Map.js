@@ -11,6 +11,7 @@ export default function Map() {
               width="600" 
               height="450" 
               frameborder="0" 
+              title="myMap"
               allowfullscreen="" 
               aria-hidden="false" 
               tabindex="0">

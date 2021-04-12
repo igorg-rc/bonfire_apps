@@ -7,7 +7,7 @@ import { contactPoints } from './FooterData'
 export default function Footer() {
   const messengers = contactPoints.messengers.map(messenger => {
     return  <li>
-              <img src={messenger.imgUrl} className={classes.Img_messengers} />
+              <img src={messenger.imgUrl} alt={messenger.title} className={classes.Img_messengers} />
               <Link 
                 href={`${'#messenger.title'}`}
                 spy={true}
