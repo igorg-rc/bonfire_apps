@@ -7,7 +7,6 @@ const path = require('path');
 const cors = require('cors');
 const logger = require('morgan');
 const jwt = require('jsonwebtoken');
-// const bodyParser = require('body-parser');
 const errorHandler = require('./middleware/error');
 const multer = require('multer');
 
