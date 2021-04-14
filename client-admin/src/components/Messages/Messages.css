@@ -152,39 +152,8 @@ h6.message-info {
   margin: 0.5vh 0 0.4vh 0 !important;
 }
 
-/* Old pagination settings */
-/* .pagination-status__item {
-  display: inline;
-}
+/* sc-hKgILt sc-eCssSg sc-iqHYGH bAjOEs dVQtMr gHOQQy rdt_TableCol */
 
-.pagination-status .pagination-status__btn {
-  position: relative;
-  float: left;
-  padding: 6px 12px;
-  margin-left: -1px;
-  color: #3949ab;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid #ddd;
+.sc-crrsfI, .gcJCzv {
+  right: 100px !important;
 }
-
-.pagination-status .pagination-status__btn:focus {
-  outline: none;
-}
-
-.pagination-status .pagination-status__btn--active,
-.pagination-status .pagination-status__btn:hover {
-  color: #fff;
-  background-color: #3949ab;
-  border-color: #3949ab;
-  cursor: pointer;
-}
-
-.pagination-status .pagination-status__btn--disable,
-.pagination-status .pagination-status__btn--disable:hover {
-  color: #d0d0d0;
-  cursor: default;
-  border-color: #d0d0d0;
-  background-color: #fff;
-  cursor: not-allowed;
-} */

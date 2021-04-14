@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import DataTable from 'react-data-table-component'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
+import moment from 'moment'
 
 import SortIcon from "@material-ui/icons/ArrowDownward"
-import Message from './Message'
 import Layout from '../Layout/Layout'
-import Pagination from '../Pages/Table/Pagination'
 
 import './Messages.css'
 
@@ -71,6 +69,7 @@ export default function Messages() {
 		email: '', 
 		messageBody: '', 
 		date: '', 
+		dateTime: '', 
 		id: '' 
 	})
 
@@ -78,31 +77,33 @@ export default function Messages() {
 		name: message.senderName,
 		email: message.senderEmail, 
 		messageBody: message.messageBody, 
-		date: message.createdAt, 
+		date: moment.utc(message.createdAt).local().format('DD MMM YYYY'), 
+		dateTime: moment.utc(message.createdAt).local().format('MMM DD, YYYY, LT'),
 		id: message._id
 	}))
 
-
+	
 	const showCurrentMessage = (e) => {
-		console.log(e.name, e.email, e.messageBody, e.date, e.id)
+		console.log(e.name, e.email, e.dateTime, moment.utc(e.date).format('MMM DD, YYYY'), e.id)
 		setMessage({
 			name: e.name, 
 			email: e.email, 
 			messageBody: e.messageBody, 
 			date: e.date, 
+			dateTime: e.dateTime, 
 			id: e.id 
 		})
 
-		console.log({...message})
+		console.log(moment.utc(message.date).format('MMM DD, YYYY'))
 	}
 
 	useEffect(() => {
 		const fetchMessages = async () => {
 			try {
-				const result = await axios.get('/api/messages');
-				const messages = result.data;
+				const result = await axios.get('/api/messages')
+				const messages = result.data
 				setMessages(messages);
-				console.log('Messages list: ', messages);
+				console.log('Messages list: ', {...messages})
 			} catch (error) {
 				console.log(error);
 			}
@@ -151,12 +152,12 @@ export default function Messages() {
 									<h6 className="left-align message-info">
 										<span style={{ fontWeight: '700' }}>{ message.name }</span>
 										<span style={{ color: '#757575', fontSize: '1rem' }}>{ message.email === '' ? '' : ` <${message.email}>` }</span><br />
-										<span style={{ color: '#757575', fontSize: '1rem' }}>{message.date === '' ? '' : message.date}</span>
+										<span style={{ color: '#757575', fontSize: '1rem' }}>{message.date === '' ? '' : message.dateTime}</span>
 									</h6>
 								</div>
 							</div>
 							
-								<span id="message">{message.messageBody}</span>
+								<div style={{ width: '20wv', textAlign: 'justify' }} id="message">{ message.messageBody}</div>
 							</div>
 						</div>
 					</div>
